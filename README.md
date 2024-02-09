@@ -36,6 +36,7 @@ mvn clean package
 java -jar /target/app.jar
 ```
 
-# HTTP
-- count: hace referencia al número de objetos a generar
-http://localhost:8080/chuck-norris/{count}
+
+# Swagger Documentation
+
+[Swagger UI](http://localhost:8080/swagger-ui.html)

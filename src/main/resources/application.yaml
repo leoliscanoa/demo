@@ -1,0 +1,27 @@
+server:
+  port: 8080
+logging:
+  level:
+    com:
+      lliscano: INFO
+  file:
+    name: ./logs/spring.log
+    path: ./logs
+  logback:
+    rollingpolicy:
+      max-file-size: 10MB
+      file-name-pattern: ./logs/spring-%d{yyyy-MM-dd}.%i.log
+      max-history: 10
+      total-size-cap: 100MB
+springdoc:
+  api-docs:
+    enabled: true
+  default-produces-media-type: application/json
+  override-with-generic-response: true
+  swagger-ui:
+    operations-sorter: method
+    tags-sorter: alpha
+    enabled: true
+    try-it-out-enabled: false
+    supported-submit-methods: get, post, put, delete
+    default-models-expand-depth: -1

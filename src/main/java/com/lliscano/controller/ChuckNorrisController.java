@@ -3,6 +3,10 @@ package com.lliscano.controller;
 import com.lliscano.dto.ResponseDTO;
 import com.lliscano.dto.ResponseServiceDTO;
 import com.lliscano.service.ChuckNorrisService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -19,11 +23,15 @@ public class ChuckNorrisController {
 
     private final ChuckNorrisService service;
 
-    @GetMapping(value = "/chuck-norris/{count}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Returns a list of random objects based on input param")
+    @ApiResponses(
+            @ApiResponse(responseCode = "200", useReturnTypeSchema = true))
+    @GetMapping(value = "/chuck-norris/{total}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ResponseDTO<List<ResponseServiceDTO>>> getChuckNorris(
-            @PathVariable(value = "count")
-            final Long count
+            @Schema(implementation = Integer.class, description = "Total number of objects", requiredMode = Schema.RequiredMode.REQUIRED)
+            @PathVariable(value = "total")
+            final Long total
     ) {
-        return new ResponseEntity<>(this.service.apiChuckNorris(count), HttpStatus.OK);
+        return new ResponseEntity<>(this.service.apiChuckNorris(total), HttpStatus.OK);
     }
 }
