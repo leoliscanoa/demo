@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -28,7 +29,8 @@ public class ChuckNorrisController {
             @ApiResponse(responseCode = "200", useReturnTypeSchema = true))
     @GetMapping(value = "/chuck-norris/{total}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ResponseDTO<List<ResponseServiceDTO>>> getChuckNorris(
-            @Schema(implementation = Integer.class, description = "Total number of objects", requiredMode = Schema.RequiredMode.REQUIRED)
+            @Schema(implementation = Integer.class, description = "Total number of objects", minimum = "1", requiredMode = Schema.RequiredMode.REQUIRED)
+            @Min(value = 1, message = "Minimum value {1}")
             @PathVariable(value = "total")
             final Long total
     ) {
