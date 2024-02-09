@@ -1,27 +1,9 @@
 version: '3.8'
 services:
-  sso:
+  api:
     build:
       context: .
       dockerfile: Dockerfile
     restart: on-failure
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/postgres?currentSchema=security
-    deploy:
-      replicas: 2
-    networks:
-      - sso-database_sso
-  nginx:
-    depends_on:
-      - sso
-    build:
-      context: nginx
-      dockerfile: Dockerfile
     ports:
       - '8080:8080'
-    restart: unless-stopped
-    networks:
-      - sso-database_sso
-networks:
-  sso-database_sso:
-    external: true

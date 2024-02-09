@@ -4,17 +4,15 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
 import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class ResponseServiceDTO {
-    private List<String> categories;
-    private String created_at;
-    private String icon_url;
-    private String id;
-    private String updated_at;
-    private String url;
-    private String value;
+public class ResponseDTO<T> {
+    private String time = new Date().toString();
+    private String message = "success";
+    private T data;
+    private Long total;
 }

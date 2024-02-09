@@ -9,7 +9,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class ResponseDTO {
+public class ResponseServiceDTO {
     private List<String> categories;
     private String created_at;
     private String icon_url;
