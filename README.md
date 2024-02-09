@@ -18,7 +18,7 @@ docker-compose -f docker-compose.yml -p demo up --force-recreate -d
 ## Down
 
 ```shell
-docker-compose -f docker-compose.yml -p demo down --remove-orphans
+docker-compose -f docker-compose.yml -p demo down --remove-orphans --rmi local
 ```
 
 

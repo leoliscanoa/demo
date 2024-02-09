@@ -17,20 +17,25 @@ import java.util.concurrent.CompletableFuture;
 public class ChuckNorrisService {
 
     private final RestTemplate restTemplate;
-    private final Long CHUNCK = 5L;
+    private final Long CHUNK = 5L;
 
     @SneakyThrows
     public ResponseDTO<List<ResponseServiceDTO>> apiChuckNorris(Long count) {
         List<ResponseServiceDTO> data = new ArrayList<>();
-        final Long total = count > 5 ? (long) Math.floor(count/CHUNCK) : 1;
-        final Long last = Math.floorMod(count,CHUNCK);
         List<CompletableFuture> futures = new ArrayList<>();
-        for(var i = 0; i< total; i++) {
-            futures.add(CompletableFuture.supplyAsync(() -> getObject(CHUNCK)));
+        if(count >= CHUNK) {
+            final Long total = count > 5 ? (long) Math.floor(count/CHUNK) : 1;
+            final Long last = Math.floorMod(count,CHUNK);
+            for(var i = 0; i< total; i++) {
+                futures.add(CompletableFuture.supplyAsync(() -> getObject(CHUNK)));
+            }
+            if(last>0) {
+                futures.add(CompletableFuture.supplyAsync(() -> getObject(last)));
+            }
+        } else {
+            futures.add(CompletableFuture.supplyAsync(() -> getObject(count)));
         }
-        if(last>0) {
-            futures.add(CompletableFuture.supplyAsync(() -> getObject(last)));
-        }
+
         CompletableFuture<Void> merge =  CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]));
         merge.join();
         for (CompletableFuture item : futures) {
