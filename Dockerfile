@@ -8,6 +8,7 @@ COPY ./src ./src
 RUN mvn clean package -Dmaven.test.skip=true
 
 FROM openjdk:17.0
+LABEL authors="leoliscanoa"
 WORKDIR /opt/app
-COPY target/app.jar app.jar
+COPY --from=BUILD /opt/demo/target/*.jar app.jar
 ENTRYPOINT ["java","-jar","app.jar"]
